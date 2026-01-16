@@ -1,4 +1,5 @@
 import time, threading
+from concurrent.futures import ThreadPoolExecutor
 
 def fun(seconds):
     print(f"sleeping for {seconds} seconds")
@@ -23,3 +24,14 @@ t3.start()
 t1.join()
 t2.join()
 t3.join()
+
+def pooling():
+    with ThreadPoolExecutor() as executor:
+        future = executor.submit(fun, 3)
+        print(future.result())
+        future = executor.submit(fun, 2)
+        print(future.result())
+        future = executor.submit(fun, 1)
+        print(future.result())
+
+pooling()
